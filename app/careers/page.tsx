@@ -4,6 +4,7 @@ import Header from '@/components/header'
 import Footer from '@/components/footer'
 import { Briefcase, MapPin, Clock, Users, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function CareersPage() {
   const positions = [
@@ -103,7 +104,18 @@ export default function CareersPage() {
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 border-b border-border/20">
         <div className="max-w-7xl mx-auto">
-          <div className="space-y-4 text-center">
+          <div className="space-y-6 text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-20 h-20 relative rounded-2xl bg-gradient-to-br from-red-500/20 to-black/40 backdrop-blur-xl p-2 shadow-2xl border border-red-500/30 magnetic-hover">
+                <Image 
+                  src="/AJ.svg" 
+                  alt="AJ STUDIOZ Logo" 
+                  width={70} 
+                  height={70}
+                  className="object-contain"
+                />
+              </div>
+            </div>
             <h1 className="text-4xl md:text-6xl font-bold glowing-brand">
               Join Our Team
             </h1>

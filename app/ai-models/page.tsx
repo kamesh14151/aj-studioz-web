@@ -41,16 +41,28 @@ export default function AIModelsPage() {
       {/* Hero Section */}
       <div className="pt-24 pb-16 px-4 sm:px-6 lg:px-8 border-b border-border/20">
         <div className="max-w-7xl mx-auto">
+          <div className="flex justify-center mb-4">
+            <div className="w-20 h-20 relative rounded-2xl bg-gradient-to-br from-red-500/20 to-black/40 backdrop-blur-xl p-2 shadow-2xl border border-red-500/30">
+              <Image 
+                src="/AJ.svg" 
+                alt="AJ STUDIOZ Logo" 
+                width={70} 
+                height={70}
+                className="object-contain"
+              />
+            </div>
+          </div>
           <div className="flex items-center gap-3 justify-center mb-6">
-            <Brain className="text-primary" size={24} />
-            <span className="text-sm font-semibold text-primary">NEXARIQ AI DIVISION</span>
+            <Brain className="text-primary neon-text" size={24} />
+            <span className="text-sm font-bold text-primary uppercase tracking-wider neon-text">Nexariq AI Division</span>
+            <Brain className="text-primary neon-text" size={24} />
           </div>
           <div className="space-y-4 text-center">
             <h1 className="text-4xl md:text-6xl font-bold glowing-brand">
               Advanced AI Models
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Cutting-edge language models built for performance, versatility, and enterprise reliability
+              Powered by <span className="text-primary font-semibold">Nexariq AI</span> - Cutting-edge language models built for performance, versatility, and enterprise reliability
             </p>
           </div>
         </div>
