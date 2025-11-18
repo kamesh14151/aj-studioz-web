@@ -83,7 +83,7 @@ export default function AIModels() {
 
               {/* CTA Button */}
               <Link
-                href="/ai-models"
+                href="/nexariq#ai-models"
                 className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 text-base flex items-center justify-center gap-2 group ${
                   model.highlighted 
                     ? 'bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-lg'
@@ -100,7 +100,7 @@ export default function AIModels() {
         {/* Additional info */}
         <div className="text-center p-8 card-premium border-accent/40">
           <p className="text-muted-foreground mb-4">Dive deeper into our AI capabilities</p>
-          <Link href="/ai-models" className="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors">
+          <Link href="/nexariq#ai-models" className="inline-flex items-center gap-2 text-primary font-semibold hover:text-accent transition-colors">
             <Zap size={18} />
             Explore Full AI Documentation
             <ArrowRight size={18} />

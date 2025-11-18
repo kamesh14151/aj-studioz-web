@@ -31,11 +31,8 @@ export default function Header() {
             <Link href="/services" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Services
             </Link>
-            <Link href="/ai-models" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              AI Models
-            </Link>
             <Link href="/nexariq" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Nexariq
+              Nexariq AI
             </Link>
             <Link href="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Projects
@@ -60,11 +57,8 @@ export default function Header() {
             <Link href="/services" className="text-xs text-muted-foreground hover:text-foreground transition-colors py-2">
               Services
             </Link>
-            <Link href="/ai-models" className="text-xs text-muted-foreground hover:text-foreground transition-colors py-2">
-              AI Models
-            </Link>
             <Link href="/nexariq" className="text-xs text-muted-foreground hover:text-foreground transition-colors py-2">
-              Nexariq
+              Nexariq AI
             </Link>
             <Link href="/projects" className="text-xs text-muted-foreground hover:text-foreground transition-colors py-2">
               Projects

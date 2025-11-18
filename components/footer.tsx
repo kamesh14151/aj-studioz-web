@@ -44,8 +44,8 @@ export default function Footer() {
             <h3 className="font-semibold text-base mb-4">Services</h3>
             <ul className="space-y-2.5">
               <li><Link href="/services" className="text-sm text-muted-foreground hover:text-primary transition-colors">Web Development</Link></li>
-              <li><Link href="/ai-models" className="text-sm text-muted-foreground hover:text-primary transition-colors">AI Integration</Link></li>
               <li><Link href="/nexariq" className="text-sm text-muted-foreground hover:text-primary transition-colors">Nexariq AI</Link></li>
+              <li><Link href="/nexariq#ai-models" className="text-sm text-muted-foreground hover:text-primary transition-colors">AI Models</Link></li>
               <li><Link href="/projects" className="text-sm text-muted-foreground hover:text-primary transition-colors">Projects</Link></li>
             </ul>
           </div>
