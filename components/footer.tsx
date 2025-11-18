@@ -50,10 +50,10 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-base mb-4">Company</h3>
             <ul className="space-y-2.5">
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">About</Link></li>
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="#contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Careers</Link></li>
+              <li><Link href="/about" className="text-sm text-muted-foreground hover:text-primary transition-colors">About</Link></li>
+              <li><Link href="/blog" className="text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link></li>
+              <li><Link href="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="/careers" className="text-sm text-muted-foreground hover:text-primary transition-colors">Careers</Link></li>
             </ul>
           </div>
 
@@ -61,9 +61,9 @@ export default function Footer() {
           <div>
             <h3 className="font-semibold text-base mb-4">Legal</h3>
             <ul className="space-y-2.5">
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link></li>
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link></li>
-              <li><Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">Cookie Policy</Link></li>
+              <li><Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link></li>
+              <li><Link href="/cookies" className="text-sm text-muted-foreground hover:text-primary transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
 
@@ -91,14 +91,14 @@ export default function Footer() {
               © {currentYear} AJ STUDIOZ. All rights reserved.
             </p>
             <div className="flex gap-6">
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link href="/privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Privacy
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              <Link href="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
                 Terms
               </Link>
-              <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                Sitemap
+              <Link href="/cookies" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+                Cookies
               </Link>
             </div>
           </div>
