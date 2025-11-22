@@ -13,7 +13,6 @@ export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedProject, setSelectedProject] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [cardRotation, setCardRotation] = useState({ x: 0, y: 0 })
 
   const projects = [
     {
@@ -106,26 +105,6 @@ export default function ProjectsPage() {
     setIsModalOpen(true)
   }, [])
 
-  // Handle 3D tilt effect
-  const handleMouseMove = useCallback((e: MouseEvent<HTMLDivElement>, index: number) => {
-    const card = e.currentTarget
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const centerX = rect.width / 2
-    const centerY = rect.height / 2
-    const rotateX = (y - centerY) / 10
-    const rotateY = (centerX - x) / 10
-    
-    card.style.setProperty('--rotate-x', `${rotateX}deg`)
-    card.style.setProperty('--rotate-y', `${rotateY}deg`)
-  }, [])
-
-  const handleMouseLeave = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.style.setProperty('--rotate-x', '0deg')
-    e.currentTarget.style.setProperty('--rotate-y', '0deg')
-  }, [])
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -193,16 +172,17 @@ export default function ProjectsPage() {
             {filtered.map((project, index) => (
               <div
                 key={index}
-                onMouseMove={(e) => handleMouseMove(e, index)}
-                onMouseLeave={handleMouseLeave}
                 onClick={() => handleCardClick(project)}
-                className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-card/90 via-card/80 to-card/70 backdrop-blur-xl hover:border-primary/60 transition-all duration-500 hover-elevate flex flex-col card-tilt cursor-pointer"
+                className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-card/90 via-card/80 to-card/70 backdrop-blur-xl hover:border-primary/60 transition-all duration-500 hover-elevate flex flex-col cursor-pointer"
                 style={{
                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
                 }}
               >
                 {/* Glow effect on hover */}
                 <div className="absolute -inset-[1px] bg-gradient-to-r from-primary/30 via-accent/30 to-primary/30 rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-opacity duration-500" />
+                
+                {/* Shimmer Loading Effect */}
+                <div className="absolute inset-0 shimmer opacity-0 group-hover:opacity-100 pointer-events-none" />
                 
                 {/* Category Badge - Positioned at top */}
                 <div className="absolute top-4 left-4 z-20">
