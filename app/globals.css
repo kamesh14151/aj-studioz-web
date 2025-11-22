@@ -499,4 +499,82 @@
   .card-flip-back {
     transform: rotateY(180deg);
   }
+
+  /* Custom Cursor Styles */
+  .custom-cursor,
+  .custom-cursor-trail {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+  }
+
+  .custom-cursor {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, oklch(0.65 0.25 220), oklch(0.72 0.22 55));
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.6);
+  }
+
+  .custom-cursor-trail {
+    width: 40px;
+    height: 40px;
+    border: 2px solid oklch(0.65 0.25 220);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1), opacity 0.15s ease-out;
+  }
+
+  /* Hide default cursor on desktop */
+  @media (hover: hover) and (pointer: fine) {
+    * {
+      cursor: none !important;
+    }
+  }
+
+  /* 3D Card Tilt on Hover */
+  .card-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .card-tilt:hover {
+    transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg)) translateZ(10px);
+  }
+
+  /* Enhanced Glassmorphism Variants */
+  .glass-light {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-medium {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-heavy {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Smooth Reveal Animation on Scroll */
+  @keyframes revealUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal-on-scroll {
+    animation: revealUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
 }

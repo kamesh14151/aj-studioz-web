@@ -1,14 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback, MouseEvent } from 'react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import { ArrowRight, ExternalLink } from 'lucide-react'
+import ProjectModal from '@/components/project-modal'
+import { ArrowRight, ExternalLink, Search } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedProject, setSelectedProject] = useState<any>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [cardRotation, setCardRotation] = useState({ x: 0, y: 0 })
 
   const projects = [
     {
@@ -85,7 +90,41 @@ export default function ProjectsPage() {
     { value: 'developer-tools', label: 'Developer Tools' },
   ]
 
-  const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter)
+  // Advanced filtering with search
+  const filtered = projects.filter(p => {
+    const matchesCategory = filter === 'all' || p.category === filter
+    const matchesSearch = searchQuery === '' || 
+      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.tech.some(tech => tech.toLowerCase().includes(searchQuery.toLowerCase()))
+    return matchesCategory && matchesSearch
+  })
+
+  // Handle card clicks to open modal
+  const handleCardClick = useCallback((project: any) => {
+    setSelectedProject(project)
+    setIsModalOpen(true)
+  }, [])
+
+  // Handle 3D tilt effect
+  const handleMouseMove = useCallback((e: MouseEvent<HTMLDivElement>, index: number) => {
+    const card = e.currentTarget
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = (y - centerY) / 10
+    const rotateY = (centerX - x) / 10
+    
+    card.style.setProperty('--rotate-x', `${rotateX}deg`)
+    card.style.setProperty('--rotate-y', `${rotateY}deg`)
+  }, [])
+
+  const handleMouseLeave = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.style.setProperty('--rotate-x', '0deg')
+    e.currentTarget.style.setProperty('--rotate-y', '0deg')
+  }, [])
 
   return (
     <div className="min-h-screen bg-background">
@@ -105,21 +144,42 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      {/* Filter Section */}
+      {/* Search & Filter Section */}
       <section className="py-12 px-4 sm:px-6 lg:px-8 border-b border-border/20">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-wrap gap-3 justify-center">
+          {/* Search Bar */}
+          <div className="max-w-2xl mx-auto mb-8">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+              <input
+                type="text"
+                placeholder="Search projects by name, description, or technology..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-4 rounded-xl bg-card/50 border border-border/50 hover:border-primary/50 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-300 text-foreground placeholder:text-muted-foreground"
+              />
+            </div>
+          </div>
+
+          {/* Filter Buttons with Project Count */}
+          <div className="flex flex-wrap gap-3 justify-center items-center">
+            <span className="text-sm text-muted-foreground mr-2">Filter by:</span>
             {categories.map(cat => (
               <button
                 key={cat.value}
                 onClick={() => setFilter(cat.value)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 hover-elevate ${
                   filter === cat.value
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-card/50 text-muted-foreground hover:bg-card border border-border/30'
+                    ? 'bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-lg shadow-primary/30'
+                    : 'bg-card/50 text-muted-foreground hover:bg-card hover:border-primary/40 border border-border/30'
                 }`}
               >
                 {cat.label}
+                {cat.value === filter && (
+                  <span className="ml-2 px-2 py-0.5 rounded-full bg-primary-foreground/20 text-xs font-bold">
+                    {filtered.length}
+                  </span>
+                )}
               </button>
             ))}
           </div>
@@ -133,7 +193,10 @@ export default function ProjectsPage() {
             {filtered.map((project, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-card/90 via-card/80 to-card/70 backdrop-blur-xl hover:border-primary/60 transition-all duration-500 hover-elevate flex flex-col"
+                onMouseMove={(e) => handleMouseMove(e, index)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleCardClick(project)}
+                className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-card/90 via-card/80 to-card/70 backdrop-blur-xl hover:border-primary/60 transition-all duration-500 hover-elevate flex flex-col card-tilt cursor-pointer"
                 style={{
                   boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08)'
                 }}
@@ -182,16 +245,17 @@ export default function ProjectsPage() {
                   </div>
 
                   {/* CTA */}
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      handleCardClick(project)
+                    }}
                     className="relative flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 hover:from-primary hover:via-accent hover:to-primary text-primary hover:text-primary-foreground transition-all duration-500 font-semibold text-sm border border-primary/20 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 overflow-hidden group/btn"
                   >
-                    <span className="relative z-10">View Live Project</span>
-                    <ExternalLink size={16} className="relative z-10 group-hover/btn:translate-x-1 group-hover/btn:scale-110 transition-transform" />
+                    <span className="relative z-10">View Details</span>
+                    <ArrowRight size={16} className="relative z-10 group-hover/btn:translate-x-1 group-hover/btn:scale-110 transition-transform" />
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700" />
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -253,6 +317,13 @@ export default function ProjectsPage() {
           </div>
         </div>
       </section>
+
+      {/* Project Modal */}
+      <ProjectModal 
+        project={selectedProject}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       <Footer />
     </div>
